@@ -10,50 +10,50 @@ namespace SocialSecurityNumberSweden
     {
         public static void verifySSN(string SSN, out bool Verify)
         {
-            int[] ssNumberControlPart = new int[13];
-            int SumssNumberControlPart = 0;
+            int[] socialSecurityNumberControlPart = new int[13];
+            int SumsocialSecurityNumberControlPart = 0;
             for (int i = 2; i < 12; i++)
             {
                 if (i != 8) 
                 { 
-                    ssNumberControlPart[i] = Convert.ToInt32(SSN[i].ToString());
+                    socialSecurityNumberControlPart[i] = Convert.ToInt32(SSN[i].ToString());
                     if (i < 8 && i % 2 == 0)
                     {
-                        ssNumberControlPart[i] *= 2;
-                        if (ssNumberControlPart[i] > 9)
+                        socialSecurityNumberControlPart[i] *= 2;
+                        if (socialSecurityNumberControlPart[i] > 9)
                         {
-                            ssNumberControlPart[i] = 1 + (ssNumberControlPart[i] - 10);
+                            socialSecurityNumberControlPart[i] = 1 + (socialSecurityNumberControlPart[i] - 10);
                         }
                     }
                     if (i > 8 && i % 2 == 1)
                     {
-                        ssNumberControlPart[i] *= 2;
-                        if (ssNumberControlPart[i] > 9)
+                        socialSecurityNumberControlPart[i] *= 2;
+                        if (socialSecurityNumberControlPart[i] > 9)
                         {
-                            ssNumberControlPart[i] = 1 + (ssNumberControlPart[i] - 10);
+                            socialSecurityNumberControlPart[i] = 1 + (socialSecurityNumberControlPart[i] - 10);
                         }
                     }
                 }
-                SumssNumberControlPart += ssNumberControlPart[i];
+                SumsocialSecurityNumberControlPart += socialSecurityNumberControlPart[i];
             }
-            int helpNumber = SumssNumberControlPart / 10;
-            ssNumberControlPart[12] = 10 - (SumssNumberControlPart - (helpNumber * 10));
+            int helpNumber = SumsocialSecurityNumberControlPart / 10;
+            socialSecurityNumberControlPart[12] = 10 - (SumsocialSecurityNumberControlPart - (helpNumber * 10));
 
-            if(ssNumberControlPart[12] == 10) { ssNumberControlPart[12] = 0; }
+            if(socialSecurityNumberControlPart[12] == 10) { socialSecurityNumberControlPart[12] = 0; }
 
-            if (ssNumberControlPart[12] == Convert.ToInt32(SSN[12].ToString()))
+            if (socialSecurityNumberControlPart[12] == Convert.ToInt32(SSN[12].ToString()))
             {
-                Console.WriteLine("\n This Social securty Number is valid! \n The last digit is {0}", ssNumberControlPart[12]);
+                Console.WriteLine("\n This Social securty Number is valid! \n The last digit is {0}", socialSecurityNumberControlPart[12]);
                 Verify = true;
             }
             else
             {
-                Console.WriteLine("\n This Social securty Number is Invalid!  \n The last digitss must be {0}", ssNumberControlPart[12]);
+                Console.WriteLine("\n This Social securty Number is Invalid!  \n The last digitss must be {0}", socialSecurityNumberControlPart[12]);
                 Console.WriteLine("==============================================================\n");
                 Verify = false;
             }
 
-            //This codes it will do the same function for verfication of the SSNumber
+            //This codes it will do the same function for verfication of the socialSecurityNumber
 
             //int y1 = Convert.ToInt32(SSN[2].ToString()); y1 = y1 * 2; if (y1 > 9) { y1 = 1 + (y1 - 10); }
             //int y2 = Convert.ToInt32(SSN[3].ToString()); /*y2 = y2 * 1;*/

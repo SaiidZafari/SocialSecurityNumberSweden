@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SocialSecurityNumberSweden": {
+      "commandName": "Project",
+      "commandLineArgs": "800101-1020 saiid 19650710-5176"
+    }
+  }
+}
