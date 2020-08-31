@@ -14,28 +14,30 @@ namespace SocialSecurityNumberSweden
             Start: //Label to send the user to the beginning to insert data.
                 Console.Write(" Pleas insert a Social Security Number in this format \n Exampel: \n Year    yyyy = 1986 \n Month     mm = 02 \n They      dd = 07 \n Scurity xxxx = 1234  \n\n Enter (yyyymmdd-xxxx)/ Quit: ");
                 string SSNumber = Console.ReadLine();
-                
-            // Data kontrol 
-            if (SSNumber.ToUpper() == "QUIT")
-            {
-                goto End;
-            }
+
+                // Data kontrol 
+            if (SSNumber.ToUpper() == "QUIT" || SSNumber.ToUpper() == "Q")
+                {
+                    break;
+                }
             else if (SSNumber.Length != 13)
-            {
-                    Console.Clear();
-                goto Start;
-            }
+                {
+                        Console.Clear();
+                    Main(null);
+                }
             UserVerification:
                 Console.Write("\n\n Is this {0} your Social Security Number  Yes/No : ", SSNumber);
                 string Answer = Console.ReadLine();
             switch (Answer.ToUpper())
             {
                     case "YES":
+                    case "Y":
                         break;
-                case "NO":
+                    case "NO":                      
+                    case "N":
                         Console.Clear();
                         goto Start;
-                default:
+                    default:
                         Console.WriteLine("Your answer is invalid. Please try again...");
                         goto UserVerification;
             }
@@ -47,31 +49,31 @@ namespace SocialSecurityNumberSweden
                 string[] SSNumbersSplit = SSNumber.Split("-");
                 
             if (SSNumbersSplit[0].Length == 8)
-            {
-                    SSNumbersSplit[0] = SSNumbersSplit[0].Insert(4, "-");
-                    SSNumbersSplit[0] = SSNumbersSplit[0].Insert(7, "-");
-            }
-                else
-            {
-                goto Start;
-            } 
+                {
+                        SSNumbersSplit[0] = SSNumbersSplit[0].Insert(4, "-");
+                        SSNumbersSplit[0] = SSNumbersSplit[0].Insert(7, "-");
+                }
+            else
+                {
+                    goto Start;
+                } 
             
             try
-            {
-                Convert.ToDateTime(SSNumbersSplit[0]);
-                Convert.ToInt32(SSNumbersSplit[1]);
-            }
-                catch
-            {
-                Console.WriteLine("\n ::::::::::::::: Exception :::::::::::::");
-                Console.WriteLine("\n   Invalid SSnumber. Pleas try again!  \n");
-                Console.WriteLine(" :::::::::::::::::::::::::::::::::::::::\n");
-                goto Start;
-            }
+                {
+                    Convert.ToDateTime(SSNumbersSplit[0]);
+                    Convert.ToInt32(SSNumbersSplit[1]);
+                }
+            catch
+                {
+                    Console.WriteLine("\n ::::::::::::::: Exception :::::::::::::");
+                    Console.WriteLine("\n   Invalid SSnumber. Pleas try again!  \n");
+                    Console.WriteLine(" :::::::::::::::::::::::::::::::::::::::\n");
+                    goto Start;
+                }
                 Console.WriteLine(" ===============================================================");
 
                 VerifySSN.verifySSN(SSNumber,out verify);
-            if(verify == false) { goto Start; }
+                if (verify == false) { Main(null); }
             //End of Verification
 
                 
@@ -85,14 +87,14 @@ namespace SocialSecurityNumberSweden
             int ageDay = 0;
 
             if (age % 365 > 30)
-            {
-                ageMonth = (int)(age % 365.25)/30;
-                ageDay = (int)(age % 365.25 % 30);
-            }
+                {
+                    ageMonth = (int)(age % 365.25)/30;
+                    ageDay = (int)(age % 365.25 % 30);
+                }
             else
-            {                
-                ageDay = (int)(age % 365.25 % 30);
-            }
+                {                
+                    ageDay = (int)(age % 365.25 % 30);
+                }
             //End of Calculat of Birthday 
 
                 Console.WriteLine("\n ===============================================================");
@@ -106,16 +108,17 @@ namespace SocialSecurityNumberSweden
 
                 Console.WriteLine("\n  Age                   : {0} years {1} Months {2} Days", ageYear,ageMonth,ageDay);
 
-            End:    
                 Console.WriteLine(" ===============================================================");
             UserAnswer:
-                Console.Write("\n Do you want to rerun this program? Y/N :");
-               string answer =  Console.ReadLine();
-                switch (answer.ToUpper())
+                Console.Write("\n Do you want to rerun this program? Yes/No :");
+               string answerRerun =  Console.ReadLine();
+                switch (answerRerun.ToUpper())
                 {
+                    case "YES":
                     case "Y":
                         Console.Clear();
                         goto Start;
+                    case "NO":
                     case "N":
                         break;
                     default:
