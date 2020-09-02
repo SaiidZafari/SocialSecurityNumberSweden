@@ -1,7 +1,8 @@
 {
   "profiles": {
     "SocialSecurityNumberSweden": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "Tim Hansson 19650602-3149"
     }
   }
 }
