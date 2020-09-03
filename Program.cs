@@ -119,7 +119,7 @@ namespace PersonalIdentityNumberSweden
 
                 Console.Clear();
                 Console.WriteLine("\n ===============================================================");
-                Console.WriteLine("\n Information about prson with Social Scurity Number (SWEDEN)");
+                Console.WriteLine("\n         Social Scurity Number (SWEDEN)\n         Information about {0} {1} {2} ",firstName, lastName, SSNumber);
                 Console.WriteLine(" ===============================================================");
                 Console.WriteLine("\n  Name                  : {0} {1}", firstName, lastName);
                 Console.WriteLine("\n  Social Scurity Number : {0}", SSNumber);
