@@ -35,23 +35,27 @@ namespace PersonalIdentityNumberSweden
                 do
                 {
                     Console.Clear();
+                    bool isMyIformation = false;
+                    bool isNotMyInformation = true;
+                    bool bla = true;
                     Console.Write("\n You have already entered this information:\n\n Name: {0} {1} \n Social Security Number: {2} \n\n Would you verify this informations? Yes/No : ", firstName, lastName, SSNumber);
                     string Answer = Console.ReadLine();
                     switch (Answer.ToUpper())
                     {
                         case "YES":
                         case "Y":
-                            clientAnswer = false;
+                            clientAnswer = isMyIformation;
                             break;
                         case "NO":
                         case "N":
-                            clientAnswer = true;
+                            clientAnswer = isNotMyInformation;
                             Console.Clear();
                             askClient(out firstName, out lastName, out SSNumber);
                             break;                            
                         default:
-                            Console.WriteLine("Your answer is invalid. Please try again...");
-                            clientAnswer = false;
+                            Console.WriteLine("\n Your answer is invalid. Please try again...");
+                            Console.Beep(300, 800);                            
+                            clientAnswer = bla;
                             break;
                             //goto UserVerification;
                     }
