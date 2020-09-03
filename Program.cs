@@ -193,7 +193,7 @@ namespace PersonalIdentityNumberSweden
             }
             else if (birthYear >= 1901 )
             {
-                generation = "Greaest";
+                generation = "Greatest";
             }
             return generation;
         }
