@@ -171,6 +171,7 @@ namespace PersonalIdentityNumberSweden
         }
 
         public static string Generation(int birthYear)
+<<<<<<< HEAD
         {
             string generation = null;
             if (birthYear > 2000) { generation = "Z"; }
@@ -178,6 +179,30 @@ namespace PersonalIdentityNumberSweden
             else if (birthYear > 1964) { generation = "X"; }
             else if (birthYear > 1945) { generation = "Baby Boomers"; }
             else if (birthYear >= 1901) { generation = "Greatest"; }
+=======
+        {   
+            string generation= null;
+            if (birthYear > 2000)
+            {
+                generation = "Z";
+            }
+            else if(birthYear >= 1985 )
+            {
+                generation = "Millennial";
+            }
+            else if (birthYear > 1964 )
+            {
+                generation = "X";
+            }
+            else if (birthYear > 1945 )
+            {
+                generation = "Baby Boomers";
+            }
+            else if (birthYear >= 1901 )
+            {
+                generation = "Greatest";
+            }
+>>>>>>> 7c56071d966c7baed3e4887a8f615a96bcc5c8e6
             return generation;
         }
     }    
