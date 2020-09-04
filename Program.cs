@@ -36,7 +36,6 @@ namespace PersonalIdentityNumberSweden
                 {
                     Console.Clear();
                     bool isMyIformation = false;
-                    bool isNotMyInformation = true;
                     bool bla = true;
                     Console.Write("\n You have already entered this information:\n\n Name: {0} {1} \n Social Security Number: {2} \n\n Would you verify this informations? Yes/No : ", firstName, lastName, SSNumber);
                     string Answer = Console.ReadLine();
@@ -48,7 +47,6 @@ namespace PersonalIdentityNumberSweden
                             break;
                         case "NO":
                         case "N":
-                            clientAnswer = isNotMyInformation;
                             Console.Clear();
                             askClient(out firstName, out lastName, out SSNumber);
                             break;                            
@@ -171,30 +169,15 @@ namespace PersonalIdentityNumberSweden
             Console.Write(" Pleas Enter your Social Security Number in this format \n Exampel: \n Year    yyyy = 1986 \n Month     mm = 02 \n They      dd = 07 \n Scurity xxxx = 1234  \n\n Enter (yyyymmdd-xxxx): ");
             SSNumber = Console.ReadLine();
         }
-        
+
         public static string Generation(int birthYear)
-        {   
-            string generation= null;
-            if (birthYear > 2000)
-            {
-                generation = "Z";
-            }
-            else if(birthYear >= 1985 )
-            {
-                generation = "Millennial";
-            }
-            else if (birthYear > 1964 )
-            {
-                generation = "X";
-            }
-            else if (birthYear > 1945 )
-            {
-                generation = "Baby Boomers";
-            }
-            else if (birthYear >= 1901 )
-            {
-                generation = "Greaest";
-            }
+        {
+            string generation = null;
+            if (birthYear > 2000) { generation = "Z"; }
+            else if (birthYear >= 1985) { generation = "Millennial"; }
+            else if (birthYear > 1964) { generation = "X"; }
+            else if (birthYear > 1945) { generation = "Baby Boomers"; }
+            else if (birthYear >= 1901) { generation = "Greatest"; }
             return generation;
         }
     }    
