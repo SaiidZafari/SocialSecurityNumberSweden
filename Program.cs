@@ -8,62 +8,59 @@ namespace PersonalIdentityNumberSweden
 {
     class Program
     {
+        //private static object birthDay;
+
         static void Main(string[] args)
         {
             bool clientAnswer = false;
+            string gender;
+            int ageYear;
+            int ageMonth;
+            int ageDay;
+            DateTime birthDay;
+            int birthYear;
+            string SSNumber;
             do
             {
                 string firstName = args[0];
                 string lastName = args[1];
-                string SSNumber = args[2];
-            
+                SSNumber = args[2];
+
                 if (args.Length > 0)
                 {
-                    Console.WriteLine(" You have already entered this information:\n Name    : {0} {1}\n SSNumber: {2}", firstName, lastName, SSNumber);
-                }
-                else
-                {
-                    askClient(out firstName, out lastName, out SSNumber);
-                }
-
-                if (SSNumber.Length != 13)
-                {
-                    Console.Clear();
-                    askClient(out firstName, out lastName, out SSNumber);
-                }
-            
-                do
-                {
-                    Console.Clear();
-                    bool isMyIformation = false;
-                    bool bla = true;
-                    Console.Write($@" 
-                You have already entered this information:
-
-                Name: {firstName} {lastName} 
-                Social Security Number: {SSNumber} 
-
-                Would you verify this informations? Yes/No : ");
-                    string Answer = Console.ReadLine();
-                    switch (Answer.ToUpper())
+                    do
                     {
-                        case "YES":
-                        case "Y":
-                            clientAnswer = isMyIformation;
-                            break;
-                        case "NO":
-                        case "N":
-                            Console.Clear();
-                            askClient(out firstName, out lastName, out SSNumber);
-                            break;                            
-                        default:
-                            Console.WriteLine("\n\t\t Your answer is invalid. Please try again...");
-                            Console.Beep(300, 800);                            
-                            clientAnswer = bla;
-                            break;
-                            //goto UserVerification;
-                    }
-                } while (clientAnswer);
+                        Console.Clear();
+                        bool isMyIformation = false;
+                        bool bla = true;
+                        Console.Write($@" 
+                    You have already entered this information:
+
+                    Name: {firstName} {lastName} 
+                    Social Security Number: {SSNumber} 
+
+                    Would you verify this informations? Yes/No : ");
+                        string Answer = Console.ReadLine();
+                        switch (Answer.ToUpper())
+                        {
+                            case "YES":
+                            case "Y":
+                                clientAnswer = isMyIformation;
+                                break;
+                            case "NO":
+                            case "N":
+                                Console.Clear();
+                                VerifySSN.askClient(out firstName, out lastName, out SSNumber);
+                                break;
+                            default:
+                                Console.WriteLine("\n\t\t Your answer is invalid. Please try again...");
+                                Console.Beep(300, 800);
+                                clientAnswer = bla;
+                                break;
+                                //goto UserVerification;
+                        }
+                    } while (clientAnswer);
+                }
                 // In this stage try to verify the data insert to the system. 
                 //It is important to manage the data from the beginning.
                 //Split data to Birthday and Security Parts
@@ -73,9 +70,9 @@ namespace PersonalIdentityNumberSweden
                 if (SSNumber.Length != 13)
                 {
                     Console.WriteLine("Invalid SSnumber. Pleas try again! ");
-                    askClient(out firstName, out lastName, out SSNumber);
+                    VerifySSN.askClient(out firstName, out lastName, out SSNumber);
                 }
-                
+
                 if (SSNumbersSplit[0].Length == 8)
                 {
                     SSNumbersSplit[0] = SSNumbersSplit[0].Insert(4, "-");
@@ -83,12 +80,12 @@ namespace PersonalIdentityNumberSweden
                 }
                 else
                 {
-                    askClient(out firstName, out lastName, out SSNumber);
+                    VerifySSN.askClient(out firstName, out lastName, out SSNumber);
                 }
 
                 try
                 {
-                    Convert.ToDateTime(SSNumbersSplit[0]);
+                    birthDay = Convert.ToDateTime(SSNumbersSplit[0]);
                     Convert.ToInt32(SSNumbersSplit[1]);
                 }
                 catch
@@ -96,36 +93,16 @@ namespace PersonalIdentityNumberSweden
                     Console.WriteLine("\n ::::::::::::::: Exception :::::::::::::");
                     Console.WriteLine("\n   Invalid SSnumber. Pleas try again!  \n");
                     Console.WriteLine(" :::::::::::::::::::::::::::::::::::::::\n");
-                    askClient(out firstName, out lastName, out SSNumber);
+                    VerifySSN.askClient(out firstName, out lastName, out SSNumber);
                 }
-                Console.WriteLine(" ===============================================================");
+                Console.WriteLine("\t\t==============================================");
 
                 VerifySSN.verifySSN(SSNumber, out verify);
-                if (verify == false) { askClient(out firstName, out lastName, out SSNumber); }
+                if (!verify) { VerifySSN.askClient(out firstName, out lastName, out SSNumber); }
                 //End of Verification
-
-                DateTime birthDay = Convert.ToDateTime(SSNumbersSplit[0]);
-
-                DateTime SecDate = DateTime.Today;
-
-                int age = int.Parse((DateTime.Today - birthDay).TotalDays.ToString());
-                int ageYear = age / 365;
-                int ageMonth = 0;
-                int ageDay = 0;
-
-                if (age % 365 > 30)
-                {
-                    ageMonth = (int)(age % 365.25) / 30;
-                    ageDay = (int)(age % 365.25 % 30);
-                }
-                else
-                {
-                    ageDay = (int)(age % 365.25 % 30);
-                }
-                
-                int birthYear = Convert.ToDateTime(SSNumbersSplit[0]).Year;
-                string gender = Convert.ToInt32(SSNumbersSplit[1][2].ToString()) % 2 == 0 ? "Female" : "Male";
-
+                birthDay = Convert.ToDateTime(SSNumbersSplit[0]);
+                VerifySSN.AgeCalculator(birthDay,SSNumbersSplit[1], out ageYear, out ageMonth, out ageDay, out gender);
+                birthYear = birthDay.Year;
                 Console.Clear();
                 Console.WriteLine($@" 
                 
@@ -134,12 +111,12 @@ namespace PersonalIdentityNumberSweden
                 =====================================================
                  Name                  : {firstName} {lastName}
                  Social Scurity Number : {SSNumber}
-                 Birth Date            : { birthDay.ToString("dd MMM yyyy")}                
+                 Birth Date            : { birthDay.ToString("yyyy MMM dd")}                
                  Gender                : {gender}
                  Age                   : {ageYear} years {ageMonth} Months {ageDay} Days
-                 Generation            : {Generation(birthYear)}
-                =====================================================");                
-            
+                 Generation            : {VerifySSN.Generation(birthYear)}
+                =====================================================");
+
                 bool userAnswer = false;
                 do
                 {
@@ -149,12 +126,10 @@ namespace PersonalIdentityNumberSweden
                     {
                         case "Y":
                             clientAnswer = true;
-                            userAnswer = false;
                             Console.Clear();
                             break;
                         case "N":
                             clientAnswer = false;
-                            userAnswer = false;
                             break;
                         default:
                             Console.WriteLine("Your answer is invalid. Please try again...");
@@ -163,34 +138,6 @@ namespace PersonalIdentityNumberSweden
                     }
                 } while (userAnswer);
             } while (clientAnswer);
-        }
-
-        public static void askClient(out string firstName, out string lastName, out string SSNumber)
-        {
-            Console.Write("\n\t\t Please Enter your First name: ");
-            firstName = Console.ReadLine();
-            Console.Write("\t\t Please Enter your Last name : ");
-            lastName = Console.ReadLine();
-            Console.Write($@" 
-                 Pleas Enter your Social Security Number in this format 
-                 Exampel:
-                 Year    yyyy = 1986
-                 Month     mm = 02 
-                 They      dd = 07
-                 Scurity xxxx = 1234
-                 Enter (yyyymmdd-xxxx): ");
-            SSNumber = Console.ReadLine();
-        }
-
-        public static string Generation(int birthYear)
-        {
-            string generation = null;
-            if (birthYear > 2000) { generation = "Z"; }
-            else if (birthYear >= 1985) { generation = "Millennial"; }
-            else if (birthYear > 1964) { generation = "X"; }
-            else if (birthYear > 1945) { generation = "Baby Boomers"; }
-            else if (birthYear >= 1901) { generation = "Greatest"; }
-            return generation;
         }
     }    
 }
